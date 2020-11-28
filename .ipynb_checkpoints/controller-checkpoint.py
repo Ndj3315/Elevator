@@ -23,4 +23,4 @@ class Controller:
         return self.building.num_employees - len( self.building.employees_delivered )
         
     def step():
-        self.building.step(self.time)
+        self.building.step()

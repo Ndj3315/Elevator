@@ -6,7 +6,6 @@ class Elevator:
         FLOORSTOP = 15
         REOPEN = 5
         FILL = 25
-        CAPACITY = 10
     
         self.identity = identity # to identify different elevators
         self.passengers = []
@@ -14,18 +13,5 @@ class Elevator:
         self.next_stop = 0
         self.time_left = FILL
         
-    def fill():
-        pass
-        # need to implement
-        
-    def deliver():
-        pass
-        # need to implement
-        
-    def step():
-        if self.location == 0.0:
-            fill()
-        if self.time_left == 0:
-        else:
-            deliver()
-        
+    # decide what the behavior of the elevator should be
+    # should the elevator figure out its next destination based on its passengers, or should controller do that? 

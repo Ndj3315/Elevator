@@ -4,7 +4,6 @@ class Employee:
     def __init__(self, office_floor, theta):
         self.office_floor = office_floor # 0 through (5)
         self.arrival_time = int( self.__chi_square_sample(theta) )
-        self.location = "outside" # then "lobby" then "elevator" then "delivered"
 
     def __chi_square_sample(self, df):
         # df does not have to be an integer
