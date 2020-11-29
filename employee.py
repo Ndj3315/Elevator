@@ -13,3 +13,4 @@ class Employee:
     def __expon_sample(self, lam):
         beta = 1.0 / lam
         return np.random.exponential(scale=beta)
+        

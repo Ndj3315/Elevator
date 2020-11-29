@@ -15,12 +15,12 @@ class Controller:
                 start_time = arrival
         self.time = start_time
         
-    def run_sim():
+    def run_sim(self):
         while self.time >= 0: # make sure this is the fencepost that you want
-            step()
+            self.step()
             self.time -= 1
         # how many employees are late
         return self.building.num_employees - len( self.building.employees_delivered )
         
-    def step():
+    def step(self):
         self.building.step(self.time)

@@ -19,32 +19,43 @@ class Building:
             
         # instantiate employees
         self.employees = []
-        for number in FLOOR_DIST:
-            for i in range(number):
-                employee_i = employee.Employee(number, theta)
-                employees.append(employee_i)
+        for floor in range(len(FLOOR_DIST)):
+            for i in range(FLOOR_DIST[floor]):
+                employee_i = employee.Employee(floor, theta)
+                self.employees.append(employee_i)
                 
         # keep track of employee locations
-        self.employees_outside = set(employees)
-        self.employees_lobby = set([])
-        self.employees_elevator = set([])
-        self.employees_delivered = set([])
+        self.employees_outside = self.employees
+        self.employees_lobby = []
+        self.employees_elevator = []
+        self.employees_delivered = []
         
-    def step(time):
+    def update_employees(self):
+        for employee in self.employees:
+            if employee.location == "outside":
+                pass
+            elif employee.location == "lobby":
+                if not employee in self.employees_lobby:
+                    self.employees_lobby.append(employee)
+                    self.employees_outside.remove(employee)
+            elif employee.location == "elevator":
+                if not employee in self.employees_elevator:
+                    self.employees_elevator.append(employee)
+                    self.employees_lobby.remove(employee)
+            elif employee.location == "delivered":
+                if not employee in self.employees_delivered:
+                    self.employees_delivered.append(employee)
+                    self.employees_elevator.remove(employee)
+            else:
+                raise Exception("Employee location: " + str(employee.location) + " ?")
+        
+    def step(self, time):
         for employee in self.employees:
             if employee.arrival_time == time:
                 employee.location = "lobby"
         for elevator in self.elevators:
-            elevator.step()
-            for employee in self.employees:
-                    if employee.location == "outside":
-                        self.employees_outside.add(employee)
-                    elif employee.location == "lobby":
-                        self.employees_lobby.add(employee)
-                    elif employee.location == "elevator":
-                        self.employees_elevator.add(employee)
-                    elif: employee.location == "delived":
-                        self.employees_delivered.add(employee)
-                    else:
-                        raise Exception("Employee location: " + str(employee.location) + " ?")
+            # pass the employees in the lobby to the elevator stepper
+            elevator.step( self.employees_lobby )
+            self.update_employees()
+            
                         
