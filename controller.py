@@ -9,7 +9,7 @@ class Controller:
 
         # set starting time (seconds before 9am)
         start_time = 0
-        for employee in self.building.employees_outside:
+        for employee in self.building.employees:
             arrival = employee.arrival_time
             if arrival > start_time:
                 start_time = arrival
@@ -20,7 +20,11 @@ class Controller:
             self.step()
             self.time -= 1
         # how many employees are late
-        return self.building.num_employees - len( self.building.employees_delivered )
+        employees_delivered = 0
+        for emp in self.building.employees:
+            if emp.location == "delivered":
+                employees_delivered += 1
+        return self.building.num_employees - employees_delivered
         
     def step(self):
         self.building.step(self.time)

@@ -23,39 +23,20 @@ class Building:
             for i in range(FLOOR_DIST[floor]):
                 employee_i = employee.Employee(floor, theta)
                 self.employees.append(employee_i)
-                
-        # keep track of employee locations
-        self.employees_outside = self.employees
-        self.employees_lobby = []
-        self.employees_elevator = []
-        self.employees_delivered = []
-        
-    def update_employees(self):
-        for employee in self.employees:
-            if employee.location == "outside":
-                pass
-            elif employee.location == "lobby":
-                if not employee in self.employees_lobby:
-                    self.employees_lobby.append(employee)
-                    self.employees_outside.remove(employee)
-            elif employee.location == "elevator":
-                if not employee in self.employees_elevator:
-                    self.employees_elevator.append(employee)
-                    self.employees_lobby.remove(employee)
-            elif employee.location == "delivered":
-                if not employee in self.employees_delivered:
-                    self.employees_delivered.append(employee)
-                    self.employees_elevator.remove(employee)
-            else:
-                raise Exception("Employee location: " + str(employee.location) + " ?")
         
     def step(self, time):
-        for employee in self.employees:
-            if employee.arrival_time == time:
-                employee.location = "lobby"
-        for elevator in self.elevators:
+        for emp in self.employees:
+            if emp.arrival_time == time:
+                emp.location = "lobby"
+        for elev in self.elevators:
             # pass the employees in the lobby to the elevator stepper
-            elevator.step( self.employees_lobby )
-            self.update_employees()
+            employees_lobby = []
+            for emp in self.employees:
+                if emp.location == "lobby":
+                    employees_lobby.append(emp)
+            employees_delivered = elev.step( employees_lobby )
+            for emp in employees_delivered:
+                index = self.employees.index(emp)
+                self.employees[index].location = "delivered"
             
                         

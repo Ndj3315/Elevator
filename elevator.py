@@ -22,14 +22,16 @@ class Elevator:
             employee = lobby.pop(0)
             employee.location = "elevator"
             self.passengers.append(employee)
-        # done ?
         
     def deliver(self):
-        for employee in self.passengers:
-            if employee.office_floor == int(self.location):
-                employee.location = "delivered"
-                self.passengers.remove(employee)
-        # done ?
+        employees_to_remove = []
+        for i in range(len(self.passengers)):
+            if self.passengers[i].office_floor == int(self.location):
+                #self.passengers[i].location = "delivered"
+                employees_to_remove.append(self.passengers[i])
+        for employee in employees_to_remove:
+            self.passengers.remove(employee)
+        return employees_to_remove
         
     def move(self):
         self.next_stop = self.next_delivery()
@@ -46,11 +48,13 @@ class Elevator:
             self.time_left -= 1
         
     def new_location(self):
+        floors = [emp.office_floor for emp in self.passengers]
+        stop = int(self.location) in floors
         if self.location == 0:
             self.time_left += self.FILL
         elif self.location % 1 != 0:
             self.time_left += self.BETWEENFLOORS
-        else:
+        elif stop:
             self.time_left += self.FLOORSTOP
         
     def next_delivery(self):
@@ -60,14 +64,25 @@ class Elevator:
         for employee in self.passengers:
             floors.append(employee.office_floor)
         next_del = min(floors)
+        
+        """
+        if self.identity == 0:
+            print("Location: " + str(self.location))
+            print("Next stop: " + str(next_del))
+            print(floors)
+            print()
+        """
+        
         if self.location >= next_del:
             raise Exception("Missed a floor!")
         return next_del
         
     def step(self, employees_lobby):
+        employees_delivered = []
         if self.location % 1 == 0:
-            self.deliver()
+            employees_delivered = self.deliver()
         if self.location == 0: # in lobby
             self.fill(employees_lobby)
         self.move()
+        return employees_delivered
         
