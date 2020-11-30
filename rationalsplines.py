@@ -94,6 +94,31 @@ def graph_mon_splines(nodes, values, d1, dn, epsilon):
 		plt.plot(t, spline_func(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10), color="grey", linewidth=1, alpha=.75) 
 	#plt.show()
 
+def spline_list(nodes, values, d1, dn, epsilon):
+    spline_eval = np.array([])
+    T = np.array([])
+    n = len(nodes) - 1
+    splines = rational_splines(nodes, values, d1, dn, epsilon)
+    h = splines[0]
+    delta = splines[1]
+    d = splines[2]
+    for i in range(1,n+1):
+        xi = nodes[i]
+        t = np.arange(nodes[i], nodes[i+1] + epsilon, epsilon)
+        c1 = h[i]
+        c2 = theta(t,xi,h[i])
+        c3 = delta[i]
+        c4 = d[i-1]
+        c5 = d[i]
+        c6 = d[i+1]
+        c7 = values[i-1]
+        c8 = values[i]
+        c9 = values[i+1]
+        c10 = t
+        spline_eval = np.append(spline_eval, spline_func(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10))
+        T = np.append(T, t)
+    return T, spline_eval
+
 """
 #the data used by Delbourgo and Gregory
 xtable3 = [7.99, 8.09, 8.19, 8.7, 9.2, 10, 12, 15, 20]
