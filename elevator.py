@@ -6,9 +6,10 @@ class Elevator:
     FILL = 25
     CAPACITY = 10
     
-    def __init__(self, identity):
+    def __init__(self, identity, restriction):
     
         self.identity = identity # to identify different elevators
+        self.restriction = restriction # list of floors the elevator is able to visit 
         self.passengers = []
         self.location = 0.0
         self.next_stop = 0
@@ -16,12 +17,18 @@ class Elevator:
         
     def fill(self, employees_lobby):
         lobby = employees_lobby
-        while len(employees_lobby) != 0 and len(self.passengers) < self.CAPACITY:
+        while len(lobby) != 0 and len(self.passengers) < self.CAPACITY:
             if self.time_left == 0:
                 self.time_left += self.REOPEN
-            employee = lobby.pop(0)
-            employee.location = "elevator"
-            self.passengers.append(employee)
+            i = 0
+            while i < len(lobby):
+                if lobby[i].office_floor in self.restriction:
+                    employee = lobby.pop(i)
+                    employee.location = "elevator"
+                    self.passengers.append(employee)
+                    i = len(lobby) + 5
+                i += 1
+            
         
     def deliver(self):
         employees_to_remove = []

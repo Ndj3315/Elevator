@@ -3,18 +3,18 @@ import employee
 
 class Building:
     
-    def __init__(self, theta):
+    def __init__(self, theta, num_elevs, restriction):
     
         # number of employees working on each floor (including ground floor)
         FLOOR_DIST = [0, 60, 60, 60, 60, 60]
-        NUM_ELEVATORS = 3
+        #NUM_ELEVATORS = 3
         # convenient for the final tab of how many employees are late
         self.num_employees = sum(FLOOR_DIST)
     
         # instantiate the elevators
         self.elevators = []
-        for i in range(NUM_ELEVATORS):
-            elevator_i = elevator.Elevator(i)
+        for i in range(num_elevs):
+            elevator_i = elevator.Elevator(i, restriction[i])
             self.elevators.append(elevator_i)
             
         # instantiate employees
