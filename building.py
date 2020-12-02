@@ -34,9 +34,12 @@ class Building:
             for emp in self.employees:
                 if emp.location == "lobby":
                     employees_lobby.append(emp)
-            employees_delivered = elev.step( employees_lobby )
+            employees_delivered, employees_taken = elev.step( employees_lobby )
             for emp in employees_delivered:
                 index = self.employees.index(emp)
                 self.employees[index].location = "delivered"
+            for emp in employees_taken:
+                index = self.employees.index(emp)
+                self.employees[index].location = "elevator"
             
                         

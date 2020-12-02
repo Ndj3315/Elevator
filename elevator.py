@@ -15,9 +15,16 @@ class Elevator:
         self.next_stop = 0
         self.time_left = self.FILL
         
+    def possible_passenger(self, arr):
+        for passenger in arr:
+            if passenger.office_floor in self.restriction:
+                return True
+        return False
+        
     def fill(self, employees_lobby):
         lobby = employees_lobby
-        while len(lobby) != 0 and len(self.passengers) < self.CAPACITY:
+        taken = []
+        while self.possible_passenger(lobby) and len(self.passengers) < self.CAPACITY:
             if self.time_left == 0:
                 self.time_left += self.REOPEN
             i = 0
@@ -26,8 +33,11 @@ class Elevator:
                     employee = lobby.pop(i)
                     employee.location = "elevator"
                     self.passengers.append(employee)
-                    i = len(lobby) + 5
+                    i = len(lobby)
+                    taken.append(employee)
+                    #print(employee.office_floor)
                 i += 1
+        return taken
             
         
     def deliver(self):
@@ -43,9 +53,9 @@ class Elevator:
     def move(self):
         self.next_stop = self.next_delivery()
         if self.time_left == 0:
-            if self.next_stop == self.location:
-                pass
-            elif self.next_stop > self.location:
+            #if self.next_stop == self.location:
+              #  pass
+            if self.next_stop > self.location:
                 self.location += .5
                 self.new_location()
             elif self.next_stop < self.location:
@@ -73,12 +83,12 @@ class Elevator:
         next_del = min(floors)
         
         """
-        if self.identity == 0:
+        if self.identity == 1:
             print("Location: " + str(self.location))
             print("Next stop: " + str(next_del))
             print(floors)
             print()
-        """
+        """  
         
         if self.location >= next_del:
             raise Exception("Missed a floor!")
@@ -86,10 +96,11 @@ class Elevator:
         
     def step(self, employees_lobby):
         employees_delivered = []
+        employees_taken = []
         if self.location % 1 == 0:
             employees_delivered = self.deliver()
         if self.location == 0: # in lobby
-            self.fill(employees_lobby)
+            employees_taken = self.fill(employees_lobby)
         self.move()
-        return employees_delivered
+        return employees_delivered, employees_taken
         

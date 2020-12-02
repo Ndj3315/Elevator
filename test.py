@@ -80,4 +80,25 @@ def average(arr):
 perfs = [average(time_list) for time_list in times]
 
 plt.bar(["No strategy", "Strategy 1", "Strategy 2"], perfs)
+plt.ylabel("late employees", size=15)
+plt.show()
+
+strategy_add = [[1,2,3,4,5] for i in range(4)]
+strategy_add2 = [[1,2,3,4,5] for i in range(5)]
+
+times_2 = []
+strats_2 = [strategy0, strategy_add, strategy_add2]
+
+for j in range(len(strats_2)):
+    strat_times = []
+    num_elevs = [3,4,5]
+    for i in range(NUMTRIALS):
+        con = controller.Controller(df_nearest, num_elevs[j], strats_2[j])
+        strat_times.append(con.run_sim())
+    times_2.append(strat_times)
+    
+perfs_2 = [average(time_list) for time_list in times_2]
+
+plt.bar(["3 Elevators", "4 Elevators", "5 Elevators"], perfs_2)
+plt.ylabel("late employees", size=15)
 plt.show()
