@@ -104,7 +104,7 @@ def spline_list(nodes, values, d1, dn, epsilon):
     d = splines[2]
     for i in range(1,n+1):
         xi = nodes[i]
-        t = np.arange(nodes[i], nodes[i+1] + epsilon, epsilon)
+        t = np.arange(nodes[i], nodes[i+1], epsilon)
         c1 = h[i]
         c2 = theta(t,xi,h[i])
         c3 = delta[i]

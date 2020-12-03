@@ -2,10 +2,10 @@ import building
 
 class Controller:
     
-    def __init__(self, theta, num_elevs, restriction):
+    def __init__(self, theta, num_elevs, restriction, floor_dist):
     
         # make the building
-        self.building = building.Building(theta, num_elevs, restriction)
+        self.building = building.Building(theta, num_elevs, restriction, floor_dist)
 
         # set starting time (seconds before 9am)
         start_time = 0

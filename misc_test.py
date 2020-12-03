@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 """
-Created on Tue Dec  1 18:51:43 2020
-
-@author: Nick
+use this file to test individual aspects of the program
 """
 
 
@@ -15,6 +12,6 @@ strategy2 = [[1,2],[3,4,5],[3,4,5]]
 strategy_add = [[1,2,3,4,5] for i in range(4)]
 strategy_add2 = [[1,2,3,4,5] for i in range(5)]
 
-con = controller.Controller(622, 3, strategyX)
+con = controller.Controller(622, 3, strategy2)
 
 print(con.run_sim())
