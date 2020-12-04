@@ -125,6 +125,8 @@ for df in dfs_pic:
     plt.plot(x, y)
 axes = plt.gca()
 axes.set_ylim([0,1.2])
+plt.xlabel("seconds before 9:00 am")
+plt.ylabel("probability density")
 plt.legend([str(df) for df in dfs_pic], title="degrees of freedom")
 plt.show()    
 
