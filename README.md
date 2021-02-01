@@ -1,5 +1,5 @@
 # Elevator
 
-### Simulate the elevator system of an office building.
+Simulate the elevator system of an office building.
 
-### See *paper.pdf* for explanation.
+See *paper.pdf* for explanation.
