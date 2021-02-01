@@ -6,7 +6,7 @@ import numpy as np
 from scipy.special import gamma
 #import math
 
-MAXDF = 800 # maximum degrees of freedom to run simulation
+MAXDF = 900 # maximum degrees of freedom to run simulation
 INTERVAL=100 # where to sample
 NUMTRIALS = 30 # how many times to run and average for each parameter value
 NUMLATE_TARGET = 60
